@@ -1,12 +1,9 @@
 const express = require('express');
 const app = express();
 const helmet = require('helmet')
-const PORT = process.env.PORT || 3030;
+
 
 // My Code
-app.listen(PORT, () => {
-  console.log('X-fherd freecodecamp Info-Sec Application started on port ${PORT}');
-});
 
 
 
@@ -63,5 +60,5 @@ app.get("/", function (request, response) {
 });
 let port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Your app is listening on port ${port}`);
+  console.log('X-fherd freecodecamp Info-Sec Application started on port ${port}`);
 });
