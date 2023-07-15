@@ -8,20 +8,35 @@ const helmet = require('helmet');
 module.exports = app;
 const api = require('./server.js');
 const timeInSeconds = 90*24*60*60;
-app.use(helmet.contentSecurityPolicy({
+/*app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", 'trusted-cdn.com']
   }
 }));
+*/
+
+app.use(helmet({
+  frameguard: {         // configure
+    action: 'deny'
+  },
+  contentSecurityPolicy: {    // enable and configure
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ['style.com'],
+    }
+  },
+  dnsPrefetchControl: false     // disable
+}))
+
 app.use(helmet.hsts({maxAge: timeInSeconds, force: true}));
 app.use(helmet.noCache());
-app.use(helmet.dnsPrefetchControl());
+//app.use(helmet.dnsPrefetchControl());
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 app.use(helmet.xssFilter());
 app.use(helmet.hidePoweredBy());
-app.use(helmet.frameguard({action: 'deny'}));
+//app.use(helmet.frameguard({action: 'deny'}));
 app.use(express.static('public'));
 app.disable('strict-transport-security');
 app.use('/_api', api);
