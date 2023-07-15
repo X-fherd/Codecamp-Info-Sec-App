@@ -8,10 +8,12 @@ const helmet = require('helmet');
 module.exports = app;
 const api = require('./server.js');
 const timeInSeconds = 90*24*60*60;
-app.use(helmet.contentSecurityPolicy({directives{
-                                      defautSrc: ["'self'"],
-                                      scriptSrc: ["'self'", 'trusted-cdn.com'],
-}}));
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'trusted-cdn.com']
+  }
+}));
 app.use(helmet.hsts({maxAge: timeInSeconds, force: true}));
 app.use(helmet.noCache());
 app.use(helmet.dnsPrefetchControl());
